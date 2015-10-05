@@ -1,8 +1,15 @@
 ## SBAdmin ##
  
 ### Installation ###
- 
-Add Scafold to your composer.json file to require Scafold :
+
+Launch composer :
+```
+    composer require jeryckho/sbadmin:dev-master --dev
+```
+
+OR
+
+Add SBAdmin to your composer.json file to require SBAdmin :
 ```
     require : {
         "laravel/framework": "5.1.*",
@@ -20,7 +27,7 @@ The next required step is to add the service provider to config/app.php :
     'jeryckho\sbadmin\SbadminServiceProvider',
 ```
  
-### Publish ###
+### Use ###
  
 The last required step is to launch artisan :
 ```
