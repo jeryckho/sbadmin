@@ -1,0 +1,21 @@
+{
+  "name": "School",
+  "version": "0.0.1",
+  "authors": [
+    "Jerome <chery.jerome@online.fr>"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.5",
+    "angular-resource": "~1.4.5",
+    "angular-route": "~1.4.5",
+    "startbootstrap-sb-admin-2": "~1.0.7"
+  }
+}

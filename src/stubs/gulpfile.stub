@@ -1,0 +1,79 @@
+var gulp = require('gulp'), fs = require('fs');
+$ = require('gulp-load-plugins')(); // Note the extra parens
+
+gulp.task('minify', ['clean'], function() {
+	return gulp.src('resources/views/welcome.blade.tpl.php')
+		.pipe($.usemin({
+			assetsDir: 'public',
+			css: [$.minifyCss(), 'concat'],
+			js: [$.uglify(), 'concat'],
+			jsp: [$.uglify(), 'concat'],
+		}))
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('fix-paths', ['minify'], function() {
+	gulp.src('public/bower_components/**/fonts/*')
+		.pipe($.rename({dirname: ''}))
+		.pipe(gulp.dest('public/fonts'));
+});
+
+gulp.task('fix-template', ['minify'], function() {
+	return gulp.src('public/welcome.blade.tpl.php')
+		.pipe($.rimraf())
+		.pipe($.rename("welcome.blade.php"))
+		.pipe(gulp.dest('resources/views'));
+});
+
+gulp.task('add-headers', ['fix-template'], function() {
+	gulp.src('resources/views/welcome.blade.php')
+		.pipe($.header("{{-- This file is generated — do not edit by hand! --}}\n"))
+		.pipe(gulp.dest('resources/views'));
+
+	gulp.src('public/js/site.js')
+		.pipe($.header("/* This file is generated — do not edit by hand! */\n"))
+		.pipe(gulp.dest('public/js'));
+
+	gulp.src('public/js/appli.js')
+		.pipe($.header("/* This file is generated — do not edit by hand! */\n"))
+		.pipe(gulp.dest('public/js'));
+
+	gulp.src('public/css/site.css')
+		.pipe($.header("/* This file is generated — do not edit by hand! */\n"))
+		.pipe(gulp.dest('public/css'));
+});
+
+gulp.task('default', ['minify', 'fix-template', 'fix-paths', 'add-headers']);
+
+gulp.task('clean', function() {
+	var generated = ['public/js/site.js', 'public/js/appli.js', 'public/css/site.css', 'public/fonts/*', 'resources/views/welcome.blade.php'];
+	return gulp.src(generated)
+		.pipe($.rimraf());
+});
+
+gulp.task('dev', ['clean'], function() {
+	gulp.src('resources/views/welcome.blade.tpl.php')
+		.pipe($.rename('welcome.blade.php'))
+		.pipe(gulp.dest('resources/views'));
+});
+
+// note the "done" callback
+gulp.task("xport", function () {
+
+	var cwd = process.cwd();
+	// vendor JS to compile (get manifest of files to bring in)
+	fs.readFile(cwd + "/files.txt", "utf-8", function (err, _data) {
+		if (err) {
+			console.log("Error: " + err);
+			return;
+		}
+		var alist = _data.split(/[\r\n]+/);
+		var index = alist.indexOf('');
+		if (index > -1) {
+			alist.splice(index, 1);
+		}
+		gulp.src(alist, {base: "."})
+		.pipe(gulp.dest('xport'));
+	});
+	return gulp.src(cwd + "/files.txt").pipe($.rimraf());
+});

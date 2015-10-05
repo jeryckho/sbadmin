@@ -1,0 +1,14 @@
+angular.module('school')
+
+.controller('DashController', [ '$scope', '$routeParams', function ($scope, $routeParams) {
+	$scope.name = 'DashController';
+	$scope.params = $routeParams;
+}])
+
+.config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+	$routeProvider
+	.when('/Dash', {
+		templateUrl : 'dashboard.html',
+		controller : 'DashController'
+	});
+}]);

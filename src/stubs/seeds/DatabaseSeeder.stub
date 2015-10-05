@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use App\User;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Model::unguard();
+
+		$this->call('UserTableSeeder');
+		$this->command->info('User table seeded!');
+
+        Model::reguard();
+    }
+}
+
+class UserTableSeeder extends Seeder {
+    public function run() {
+		User::create([
+			'name'=>'admin',
+			'email'=>'admin@use.fr',
+			'password'=> bcrypt('admin')
+		]);
+		User::create([
+			'name'=>'user',
+			'email'=>'user@use.fr',
+			'password'=> bcrypt('user')
+		]);
+		User::create([
+			'name'=>'test',
+			'email'=>'test@use.fr',
+			'password'=> bcrypt('test')
+		]);
+    }
+}

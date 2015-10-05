@@ -1,0 +1,36 @@
+angular.module('school', ['ngRoute', 'ngResource'])
+
+.controller('MainController', [ '$scope', '$route', '$routeParams', '$location', '$timeout' ,function ($scope, $route, $routeParams, $location, $timeout) {
+	$scope.$route = $route;
+	$scope.$location = $location;
+	$scope.$routeParams = $routeParams;
+
+	$scope.callAtTimeout = function() {
+		window.location = '#/Dash';
+	}
+
+	$timeout( function(){ $scope.callAtTimeout(); }, 500);
+}])
+
+.controller('VoidController', [ '$scope', '$routeParams', function ($scope, $routeParams) {
+	$scope.name = 'EcoleController';
+	$scope.params = $routeParams;
+}])
+
+.config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+	$routeProvider
+	.otherwise({
+		templateUrl : 'void.html',
+		controller : 'VoidController',
+		resolve : {
+			stop : ['$q',function ($q) {
+				var stop = $q.defer();
+				stop.reject();
+				return stop.promise;
+			} ]
+		}
+	});
+
+  // configure html5 to get links working on jsfiddle
+	//  $locationProvider.html5Mode(true);
+}]);

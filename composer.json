@@ -1,0 +1,25 @@
+{
+  "name": "jeryckho/sbadmin",
+  "description": "Template Laravel 5.1 with SBAdmin",
+  "homepage": "http://github.com/jeryckho/sbadmin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Taylor Otwell",
+      "email": "taylorotwell@gmail.com"
+    },
+    {
+      "name": "Jery Ckho",
+      "email": "chery.jerome@free.fr"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "jeryckho\\sbadmin\\": "src/"
+    }
+  }
+}
