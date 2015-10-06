@@ -1,0 +1,48 @@
+angular.module('school')
+
+.factory('[Rsr]Svc', [ '$resource', function ($resource) {
+	return $resource( '[res]/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } );
+}])
+
+.controller('[Rsr]Ctl', [ '$scope', '$routeParams', '[Rsr]Svc', function ($scope, $routeParams, [Rsr]Svc) {
+	$scope.name = '[Rsr]Ctl';
+	$scope.params = $routeParams;
+	$scope.items = [Rsr]Svc.query();
+	$scope.Reset = function( form ) {
+		if (form) {
+			form.$setPristine();
+			form.$setUntouched();
+		}
+		$scope.toSend = { }; // TODO : name:'', email:'', password:''
+	}
+	$scope.checkErr = function( elem ) {
+		if (elem) {
+			if (elem.$touched && elem.$invalid) { return 'has-error'; }
+			if (elem.$touched && elem.$valid) { return 'has-success'; }			
+		}
+		return '';
+	}
+	$scope.Send = function( form ) {
+		if (form.$valid) {
+			[Rsr]Svc.save( $scope.toSend, function(Res) {
+				$scope.items.push(Res);
+			});
+		}
+	}
+	$scope.toDel = function ( Pos ) {
+		[Rsr]Svc.delete ( { Id : $scope.items[Pos].id }, function (Res) {
+			if (Res.result == 'success') {
+				$scope.items.splice(Pos, 1);
+			}
+		});
+	}
+	$scope.Reset();
+}])
+
+.config([ '$routeProvider', function ($routeProvider) {
+	$routeProvider
+	.when('/[Rsr]', {
+		templateUrl : '[res]/create',
+		controller : '[Rsr]Ctl'
+	});
+}]);

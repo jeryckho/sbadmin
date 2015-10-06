@@ -11,8 +11,7 @@ OR
 
 Add SBAdmin to your composer.json file to require SBAdmin :
 ```
-    require : {
-        "laravel/framework": "5.1.*",
+    require-dev : {
         "jeryckho/sbadmin": "dev-master"
     }
 ```
@@ -22,7 +21,7 @@ Update Composer :
     composer update
 ```
  
-The next required step is to add the service provider to config/app.php :
+In both case, the next required step is to add the service provider to config/app.php :
 ```
     'jeryckho\sbadmin\SbadminServiceProvider',
 ```
@@ -32,6 +31,12 @@ The next required step is to add the service provider to config/app.php :
 The last required step is to launch artisan :
 ```
     php artisan sb:prepare
+```
+
+OR
+
+```
+    php artisan sb:simpleadd MyClass
 ```
  
 Congratulations, you have successfully installed SBAdmin !

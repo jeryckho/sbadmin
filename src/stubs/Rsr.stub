@@ -1,0 +1,10 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class [Rsr] extends Model {
+	protected $table = '[ress]';
+	public $timestamps = false;
+}

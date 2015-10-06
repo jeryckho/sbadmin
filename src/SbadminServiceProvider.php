@@ -24,12 +24,13 @@ class SbadminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerPrepareGenerator();
+        $this->registerSimpleaddGenerator();
         // $this->registerMigrationGenerator();
         // $this->registerPivotMigrationGenerator();
     }
 
     /**
-     * Register the make:seed generator.
+     * Register the sb:prepare generator.
      */
     private function registerPrepareGenerator()
     {
@@ -38,6 +39,18 @@ class SbadminServiceProvider extends ServiceProvider
         });
 
         $this->commands('command.jeryckho.prepare');
+    }
+
+    /**
+     * Register the sb:simpleadd generator.
+     */
+    private function registerSimpleaddGenerator()
+    {
+        $this->app->singleton('command.jeryckho.simpleadd', function ($app) {
+            return $app['jeryckho\sbadmin\Commands\SimpleaddSBCommand'];
+        });
+
+        $this->commands('command.jeryckho.simpleadd');
     }
 
     /**
