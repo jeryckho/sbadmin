@@ -104,9 +104,14 @@ class SimpleaddSBCommand extends Command
 
         $this->info( 'Modifying Routes!');
 
+        $pre = "/* Don't touch above */";
+        $pst = $this->replaceTpl( "\tRoute::resource('[res]', '[Rsr]Controller');" );
+
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );
-            $crt = str_replace( "/* Don't touch above */", $this->replaceTpl( "/* Don't touch above */\n\tRoute::resource('[res]', '[Rsr]Controller');" ), $crt );
+            if ( strpos( $crt, $pst ) === false ) {
+                $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );    
+            }
             $this->fs->put( $elem, $crt );
         }
     }
@@ -118,9 +123,14 @@ class SimpleaddSBCommand extends Command
 
         $this->info( 'Modifying Template!');
 
+        $pre = "<!-- Don't touch above -->";
+        $pst = $this->replaceTpl( "\t" . '<script src="js/[res].js"></script>' );
+
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );
-            $crt = str_replace( "<!-- Don't touch above -->", $this->replaceTpl( "<!-- Don't touch above -->\n\t<script src=\"js/[res].js\"></script>" ), $crt );
+            if ( strpos( $crt, $pst ) === false ) {
+                $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );    
+            }
             $this->fs->put( $elem, $crt );
         }
     }
