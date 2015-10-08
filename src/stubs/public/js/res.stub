@@ -8,12 +8,16 @@ angular.module('school')
 	$scope.name = '[Rsr]Ctl';
 	$scope.params = $routeParams;
 	$scope.items = [Rsr]Svc.query();
-	$scope.Reset = function( form ) {
+	$scope.Reset = function( form, Pos ) {
 		if (form) {
 			form.$setPristine();
 			form.$setUntouched();
 		}
-		$scope.toSend = { }; // TODO : name:'', email:'', password:''
+		if (Pos !== null) {
+			$scope.toSend = angular.copy( $scope.items[Pos] );
+		} else {
+			$scope.toSend = { }; // TODO : name:'', email:'', password:''
+		}
 	}
 	$scope.checkErr = function( elem ) {
 		if (elem) {
@@ -29,6 +33,13 @@ angular.module('school')
 			});
 		}
 	}
+	$scope.Patch = function( form ) {
+		if (form.$valid) {
+			[Rsr]Svc.update( { Id : $scope.toSend.id }, $scope.toSend, function(Res) {
+				$scope.items.splice( $scope.items.indexOf( $scope.toSend ), 1, Res );
+			});
+		}
+	}
 	$scope.toDel = function ( Pos ) {
 		[Rsr]Svc.delete ( { Id : $scope.items[Pos].id }, function (Res) {
 			if (Res.result == 'success') {
@@ -39,10 +50,20 @@ angular.module('school')
 	$scope.Reset();
 }])
 
+.controller('[Rsr]DtlCtl', [ '$scope', '$routeParams', '[Rsr]Svc', function ($scope, $routeParams, [Rsr]Svc) {
+	$scope.name = '[Rsr]DtlCtl';
+	$scope.params = $routeParams;
+	$scope.item = [Rsr]Svc.get( { Id : $scope.params.Id } );
+}])
+
 .config([ '$routeProvider', function ($routeProvider) {
 	$routeProvider
 	.when('/[Rsr]', {
 		templateUrl : '[res]/create',
 		controller : '[Rsr]Ctl'
+	})
+	.when('/[Rsr]/:Id', {
+		templateUrl : '[res]/0/edit',
+		controller : '[Rsr]DtlCtl'
 	});
 }]);

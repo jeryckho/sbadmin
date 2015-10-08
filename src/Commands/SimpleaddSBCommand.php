@@ -152,7 +152,8 @@ class SimpleaddSBCommand extends Command
 
     private function addViews() {
         $liste = array(
-            array( '/../stubs/views/rsr.index.blade.stub', $this->replaceTpl( './resources/views/[res]/index.blade.php' ) )
+            array( '/../stubs/views/rsr.index.blade.stub', $this->replaceTpl( './resources/views/[res]/index.blade.php' ) ),
+            array( '/../stubs/views/rsr.show.blade.stub', $this->replaceTpl( './resources/views/[res]/show.blade.php' ) )
         );
         $this->makeDirectory( $this->replaceTpl( './resources/views/[res]/' ) );
 

@@ -68,9 +68,15 @@ class [Rsr]Controller extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
-		
+	public function update($id, Request $request) {
+		$item = [Rsr]::find( $id );
+		if (!$item) {
+			return response()->json( ['result' => 'fail'] );
+		}
+		$item->fill( $request->all() );
+		$item->save();
+
+		return response()->json( $item );
 	}
 
 	/**
