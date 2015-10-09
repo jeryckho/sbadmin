@@ -1,4 +1,4 @@
-angular.module('[sbn]', ['ngRoute', 'ngResource'])
+angular.module('[sbn]', ['ngRoute', 'ngResource', 'angular-loading-bar'])
 
 .controller('MainController', [ '$scope', '$route', '$routeParams', '$location', '$timeout' ,function ($scope, $route, $routeParams, $location, $timeout) {
 	$scope.$route = $route;

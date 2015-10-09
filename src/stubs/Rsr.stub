@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class [Rsr] extends Model {
 	protected $table = '[ress]';
+	protected $guarded = [];
 	public $timestamps = false;
 }
