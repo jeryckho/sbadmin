@@ -27,12 +27,12 @@
 					</a>
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Création
-						<span class="pull-right "><em>@{{ item.created_at | date:'medium':'+0200' }}</em>
+						<span class="pull-right "><em>@{{ item.created_at*1000 | date:'medium':'+0200' }}</em>
 						</span>
 					</a>
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Modification
-						<span class="pull-right "><em>@{{ item.updated_at | date:'medium':'+0200' }}</em>
+						<span class="pull-right "><em>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</em>
 						</span>
 					</a>
 		-->

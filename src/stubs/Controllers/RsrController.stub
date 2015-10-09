@@ -31,10 +31,20 @@ class [Rsr]Controller extends Controller {
 	 * @return Response
 	 */
 	public function store(Request $request) {
-		$item = new [Rsr]($request->all());
-		$item->save();
+		$item = new [Rsr]();
 
-		return response()->json( $item );
+		$all = $request->all();
+
+		if ( $item->validate( $all ) ) {
+			$item->fill( $all );
+			$item->save();			
+			return response()->json( $item );
+		} else {
+			return response()->json( [
+				'result' => 'fail',
+				'errors' => $item->errors()
+			] );
+		}
 	}
 
 	/**
@@ -73,10 +83,19 @@ class [Rsr]Controller extends Controller {
 		if (!$item) {
 			return response()->json( ['result' => 'fail'] );
 		}
-		$item->fill( $request->all() );
-		$item->save();
 
-		return response()->json( $item );
+		$all = $request->all();
+
+		if ( $item->validate( $all ) ) {
+			$item->fill( $all );
+			$item->save();			
+			return response()->json( $item );
+		} else {
+			return response()->json( [
+				'result' => 'fail',
+				'errors' => $item->errors()
+			] );
+		}
 	}
 
 	/**

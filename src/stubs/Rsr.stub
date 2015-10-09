@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class [Rsr] extends Model {
+class [Rsr] extends VModel {
 	protected $table = '[ress]';
 	protected $guarded = [];
+    protected $dateFormat = 'U';
 	public $timestamps = false;
 }

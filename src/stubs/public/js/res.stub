@@ -29,7 +29,9 @@ angular.module('[sbn]')
 	$scope.Send = function( form ) {
 		if (form.$valid) {
 			[Rsr]Svc.save( $scope.toSend, function(Res) {
-				$scope.items.push(Res);
+				if (Res.result != 'fail') {
+					$scope.items.push(Res);
+				}
 			});
 		}
 	}
@@ -37,9 +39,11 @@ angular.module('[sbn]')
 		if (form.$valid) {
 			var $lid = $scope.toSend.id;
 			UserSvc.update( { Id : $lid }, $scope.toSend, function(Res) {
-				for (var i = 0, len = $scope.items.length; i < len; i++) {
-					if  ($scope.items[i].id === $lid) {
-						$scope.items[i] = Res;
+				if (Res.result != 'fail') {
+					for (var i = 0, len = $scope.items.length; i < len; i++) {
+						if  ($scope.items[i].id === $lid) {
+							$scope.items[i] = Res;
+						}
 					}
 				}
 			});

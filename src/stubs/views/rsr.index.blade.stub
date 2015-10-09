@@ -33,7 +33,7 @@
 <!--  TODO
 								<td>@{{ item.name }}</td>
 								<td>@{{ item.email }}</td>
-								<td>@{{ item.updated_at | date:'medium':'+0200' }}</td>
+								<td>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</td>
 -->
 								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a> / <a href="#" data-toggle="modal" data-target="#myModMod" ng-click="Reset(formMod,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a> / <a href="#" ng-click="toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
 							</tr>

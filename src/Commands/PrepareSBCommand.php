@@ -114,7 +114,8 @@ class PrepareSBCommand extends Command
             array( '/../stubs/Controllers/Auth/AuthController.stub', './app/Http/Controllers/Auth/AuthController.php' ),
             array( '/../stubs/Middleware/Authenticate.stub', './app/Http/Middleware/Authenticate.php' ),
             array( '/../stubs/Middleware/VerifyCsrfToken.stub', './app/Http/Middleware/VerifyCsrfToken.php' ),
-            array( '/../stubs/routes.stub', './app/Http/routes.php' )
+            array( '/../stubs/routes.stub', './app/Http/routes.php' ),
+            array( '/../stubs/VModel.stub', './app/VModel.php' )
         );
         $this->makeDirectory("./app/Http/Controllers/Auth/");
 
