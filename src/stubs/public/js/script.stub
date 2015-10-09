@@ -1,4 +1,4 @@
-angular.module('school', ['ngRoute', 'ngResource'])
+angular.module('[sbn]', ['ngRoute', 'ngResource'])
 
 .controller('MainController', [ '$scope', '$route', '$routeParams', '$location', '$timeout' ,function ($scope, $route, $routeParams, $location, $timeout) {
 	$scope.$route = $route;

@@ -48,8 +48,8 @@ class SimpleaddSBCommand extends Command
 
     protected function replaceTpl( $chaine ) {
         return str_replace(
-            array(  '[Rsr]',     '[res]',     '[ress]',     '[table]',     '[fres]',     '[fress]',     '[ico]' ),
-            array( $this->Rsr,  $this->res,  $this->ress,  $this->table,  $this->fres,  $this->fress,  $this->ico ),
+            array(  '[Rsr]',     '[res]',     '[ress]',     '[table]',     '[fres]',     '[fress]',     '[ico]',     '[sbnice]',  '[sbn]'),
+            array( $this->Rsr,  $this->res,  $this->ress,  $this->table,  $this->fres,  $this->fress,  $this->ico,  $this->sbn,  camel_case( $this->sbn )  ),
             $chaine
         );
     }
@@ -95,6 +95,7 @@ class SimpleaddSBCommand extends Command
         $this->fres = $this->option('localized') ? $this->option('localized') : $this->Rsr;
         $this->fress = $this->option('localizeds') ? $this->option('localizeds') : str_plural( $this->fres );
         $this->ico = $this->option('icon');
+        $this->sbn = $this->option('sbname');
     }
 
     private function modRoutes() {
@@ -193,7 +194,8 @@ class SimpleaddSBCommand extends Command
             array('table','t', InputOption::VALUE_OPTIONAL, 'Name of the table' , null),
             array('localized','fr', InputOption::VALUE_OPTIONAL, 'Singular localized name' , null),
             array('localizeds','frs', InputOption::VALUE_OPTIONAL, 'Plural localized name' , null),
-            array('icon','i', InputOption::VALUE_OPTIONAL, 'Icon class' , '')
+            array('icon','i', InputOption::VALUE_OPTIONAL, 'Icon class' , ''),
+            array('sbname','sn', InputOption::VALUE_OPTIONAL, 'Template Name' , env('SB_NAME', 'My App') )
         );
     }
 }

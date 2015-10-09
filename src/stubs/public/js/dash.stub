@@ -1,4 +1,4 @@
-angular.module('school')
+angular.module('[sbn]')
 
 .controller('DashController', [ '$scope', '$routeParams', function ($scope, $routeParams) {
 	$scope.name = 'DashController';

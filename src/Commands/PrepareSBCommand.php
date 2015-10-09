@@ -42,6 +42,14 @@ class PrepareSBCommand extends Command
         }
     }
 
+    protected function replaceTpl( $chaine ) {
+        return str_replace(
+            array(  '[sbnice]',  '[sbn]'),
+            array( $this->sbn,  camel_case( $this->sbn )  ),
+            $chaine
+        );
+    }
+
     protected function makeDirectory($path) {
         if ( !$this->fs->isDirectory( $path ) ) {
             $this->fs->makeDirectory( $path, 0777, true, true );
@@ -62,9 +70,7 @@ class PrepareSBCommand extends Command
         $this->info( 'Installing ' . $titre . '!');
 
         foreach ($liste as $elem) {
-            if ( !$this->fs->copy( __DIR__ . $elem[0], $elem[1] ) ) {
-                $this->error($elem[1] . ' in error!');
-            }
+            $this->fs->put( $elem[1], $this->replaceTpl( $this->fs->get( __DIR__ . $elem[0] ) ) );
         }        
     }
 
@@ -78,6 +84,7 @@ class PrepareSBCommand extends Command
     private function init() {
         $this->force = $this->option('force');
         $this->launch = $this->option('launch');
+        $this->sbn = $this->option('sbname');
     }
 
     protected function makeMigrations() {
@@ -171,7 +178,8 @@ class PrepareSBCommand extends Command
     protected function getOptions() {
         return array(
             array('force', 'f', InputOption::VALUE_NONE, 'Force preparation' , null),
-            array('launch','l', InputOption::VALUE_NONE, 'Launch needed commands' , null)
+            array('launch','l', InputOption::VALUE_NONE, 'Launch needed commands' , null),
+            array('sbname','sn', InputOption::VALUE_OPTIONAL, 'Template Name' , env('SB_NAME', 'My App') )
         );
     }   
 }

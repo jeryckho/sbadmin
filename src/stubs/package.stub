@@ -1,6 +1,7 @@
 {
-  "name": "School",
+  "name": "GulpApp",
   "version": "0.0.1",
+  "private": true,
   "description": "",
   "main": "public/index.php",
   "dependencies": {

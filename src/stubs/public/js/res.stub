@@ -1,4 +1,4 @@
-angular.module('school')
+angular.module('[sbn]')
 
 .factory('[Rsr]Svc', [ '$resource', function ($resource) {
 	return $resource( '[res]/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } );
@@ -35,8 +35,13 @@ angular.module('school')
 	}
 	$scope.Patch = function( form ) {
 		if (form.$valid) {
-			[Rsr]Svc.update( { Id : $scope.toSend.id }, $scope.toSend, function(Res) {
-				$scope.items.splice( $scope.items.indexOf( $scope.toSend ), 1, Res );
+			var $lid = $scope.toSend.id;
+			UserSvc.update( { Id : $lid }, $scope.toSend, function(Res) {
+				for (var i = 0, len = $scope.items.length; i < len; i++) {
+					if  ($scope.items[i].id === $lid) {
+						$scope.items[i] = Res;
+					}
+				}
 			});
 		}
 	}
