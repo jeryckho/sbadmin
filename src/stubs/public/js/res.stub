@@ -38,7 +38,7 @@ angular.module('[sbn]')
 	$scope.Patch = function( form ) {
 		if (form.$valid) {
 			var $lid = $scope.toSend.id;
-			UserSvc.update( { Id : $lid }, $scope.toSend, function(Res) {
+			[Rsr]Svc.update( { Id : $lid }, $scope.toSend, function(Res) {
 				if (Res.result != 'fail') {
 					for (var i = 0, len = $scope.items.length; i < len; i++) {
 						if  ($scope.items[i].id === $lid) {
