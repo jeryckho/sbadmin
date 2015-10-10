@@ -9,44 +9,62 @@ angular.module('[sbn]')
 	$scope.params = $routeParams;
 	$scope.items = [Rsr]Svc.query();
 	$scope.Reset = function( form, Pos ) {
+		$scope.action = '';
 		if (form) {
 			form.$setPristine();
 			form.$setUntouched();
 		}
 		if (Pos !== null) {
+			$scope.action = 'Modifier';
 			$scope.toSend = angular.copy( $scope.items[Pos] );
 		} else {
+			$scope.action = 'Ajouter';
 			$scope.toSend = { }; // TODO : name:'', email:'', password:''
 		}
 	}
 	$scope.checkErr = function( elem ) {
 		if (elem) {
 			if (elem.$touched && elem.$invalid) { return 'has-error'; }
-			if (elem.$touched && elem.$valid) { return 'has-success'; }			
+			if (elem.$touched && elem.$valid) { return 'has-success'; }
 		}
 		return '';
 	}
 	$scope.Send = function( form ) {
-		if (form.$valid) {
-			[Rsr]Svc.save( $scope.toSend, function(Res) {
-				if (Res.result != 'fail') {
-					$scope.items.push(Res);
-				}
-			});
-		}
-	}
-	$scope.Patch = function( form ) {
-		if (form.$valid) {
-			var $lid = $scope.toSend.id;
-			[Rsr]Svc.update( { Id : $lid }, $scope.toSend, function(Res) {
-				if (Res.result != 'fail') {
-					for (var i = 0, len = $scope.items.length; i < len; i++) {
-						if  ($scope.items[i].id === $lid) {
-							$scope.items[i] = Res;
-						}
+		if ($scope.action == 'Ajouter') {
+			if (form.$valid) {
+				[Rsr]Svc.save( $scope.toSend, function(Res) {
+					if (Res.result != 'fail') {
+						$scope.items.push(Res);
+						$('#myModAdd').modal('hide');
+						//$scope.$apply();
+					} else {
+						angular.forEach(Res.errors, function(value,key) {
+							form['z'+key].$invalid = true;
+							form.$invalid = true;
+						});
 					}
-				}
-			});
+				});
+			}
+		} else {
+			if (form.$valid) {
+				var $lid = $scope.toSend.id;
+				[Rsr]Svc.update( { Id : $lid }, $scope.toSend, function(Res) {
+					if (Res.result != 'fail') {
+						for (var i = 0, len = $scope.items.length; i < len; i++) {
+							if  ($scope.items[i].id === $lid) {
+								$scope.items[i] = Res;
+							}
+						}
+						$('#myModAdd').modal('hide');
+						//$scope.$apply();
+					} else {
+						angular.forEach(Res.errors, function(value,key) {
+							form['z'+key].$invalid = true;
+							form.$invalid = true;
+						});
+					}
+				});
+			}			
 		}
 	}
 	$scope.toDel = function ( Pos ) {

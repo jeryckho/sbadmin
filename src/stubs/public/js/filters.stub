@@ -1,0 +1,25 @@
+angular.module('filters', []).
+    filter('fromNative', function() {
+        /**
+         * Transform any "foreign key" value to its string representation,
+         * similar to the way ng-options works for a <select> element,
+         *
+         * Example:
+         *   Let's say we have an item object with a userID property (item.userID = 5)
+         *   This ID translates to a 'username' from a 'users' object, that looks
+         *   something like this: users = [ {id: 6, name: 'john'}, ... ].
+         *
+         *   To use in a template, just write out the params
+         *     {[{ item.userID | fromNative:users:'id':'name' }]}
+         */
+        return function(native, options, matchField, valueField) {
+            if (options) {
+                for (var i=0; i<options.length; i++) {
+                    if (options[i][matchField] === native) {
+                        return options[i][valueField];
+                    }
+                }
+            }
+            return '';
+        }
+    });

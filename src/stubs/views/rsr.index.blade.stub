@@ -35,7 +35,7 @@
 								<td>@{{ item.email }}</td>
 								<td>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</td>
 -->
-								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a> / <a href="#" data-toggle="modal" data-target="#myModMod" ng-click="Reset(formMod,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a> / <a href="#" ng-click="toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
+								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a> / <a href="#" data-toggle="modal" data-target="#myModAdd" ng-click="Reset(formMod,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a> / <a href="#" ng-click="toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -51,7 +51,7 @@
 <div class="row">
 	<div class="col-lg-2 col-lg-offset-5">
 		<!-- Button trigger modal -->
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModAdd" ng-click="Reset(formAdd)">
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModAdd" ng-click="Reset(formAdd,null)">
 			<i class="fa fa-plus-circle"></i> Ajouter
 		</button>
 		<!-- Modal -->
@@ -61,7 +61,7 @@
 					<form name="formAdd" novalidate>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModAddLabel">Ajouter [fres]</h4>
+						<h4 class="modal-title" id="myModAddLabel"> @{{ action }} [fres]</h4>
 					</div>
 					<div class="modal-body">
 <!--  TODO
@@ -81,43 +81,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="Send(formAdd)" ng-disabled="formAdd.$invalid">Ajouter</button>
-					</div>
-					</form>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-		<!-- /.modal -->
-		<!-- Modal -->
-		<div class="modal fade" id="myModMod" tabindex="-1" role="dialog" aria-labelledby="myModModLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form name="formMod" novalidate>
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModModLabel">Modifier [fres]</h4>
-					</div>
-					<div class="modal-body">
-<!--  TODO
-						<div class="form-group input-group" ng-class="checkErr(formMod.zname)">
-							<span class="input-group-addon"><i class="[ico]"></i></span>
-							<input class="form-control" type="text" placeholder="Pseudo" ng-model="toSend.name" name="zname" required="">
-						</div>
-						<div class="form-group input-group" ng-class="checkErr(formMod.zemail)">
-							<span class="input-group-addon">@</span>
-							<input class="form-control" type="email" placeholder="Mail" ng-model="toSend.email" name="zemail" required="">
-						</div>
-						<div class="form-group input-group" ng-class="checkErr(formMod.pass)">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-							<input class="form-control" type="password" placeholder="Mot de passe" ng-model="toSend.password" name="pass" required="">
-						</div>
--->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="Patch(formMod)" ng-disabled="formMod.$invalid">Modifier</button>
+						<button type="button" class="btn btn-primary" ng-click="Send(formAdd)" ng-disabled="formAdd.$invalid">@{{ action }} </button>
 					</div>
 					</form>
 				</div>

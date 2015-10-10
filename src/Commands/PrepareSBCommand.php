@@ -127,6 +127,7 @@ class PrepareSBCommand extends Command
             array( '/../stubs/public/dashboard.stub', './public/dashboard.html' ),
             array( '/../stubs/public/js/dash.stub', './public/js/dash.js' ),
             array( '/../stubs/public/js/script.stub', './public/js/script.js' )
+            array( '/../stubs/public/js/filters.stub', './public/js/filters.js' )
         );
         $this->makeDirectory("./public/js/");
 

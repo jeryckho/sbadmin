@@ -350,6 +350,7 @@
 	<!-- build:jsp js/appli.js -->
 	<script src="js/script.js"></script>
 	<script src="js/dash.js"></script>
+	<script src="js/filters.js"></script>
 	<!-- Don't touch above -->
 	<!-- endbuild -->
 
