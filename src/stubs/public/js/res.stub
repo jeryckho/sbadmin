@@ -35,7 +35,7 @@ angular.module('[sbn]')
 				[Rsr]Svc.save( $scope.toSend, function(Res) {
 					if (Res.result != 'fail') {
 						$scope.items.push(Res);
-						$('#myModAdd').modal('hide');
+						$('#myModal').modal('hide');
 						//$scope.$apply();
 					} else {
 						angular.forEach(Res.errors, function(value,key) {
@@ -55,7 +55,7 @@ angular.module('[sbn]')
 								$scope.items[i] = Res;
 							}
 						}
-						$('#myModAdd').modal('hide');
+						$('#myModal').modal('hide');
 						//$scope.$apply();
 					} else {
 						angular.forEach(Res.errors, function(value,key) {

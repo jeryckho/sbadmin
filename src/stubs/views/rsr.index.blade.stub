@@ -35,7 +35,9 @@
 								<td>@{{ item.email }}</td>
 								<td>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</td>
 -->
-								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a> / <a href="#" data-toggle="modal" data-target="#myModAdd" ng-click="Reset(formMod,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a> / <a href="#" ng-click="toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
+								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a>
+								 / <a href="#" data-toggle="modal" data-target="#myModal" ng-click="Reset(form,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a>
+								 / <a href="#" ng-click="toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -51,37 +53,43 @@
 <div class="row">
 	<div class="col-lg-2 col-lg-offset-5">
 		<!-- Button trigger modal -->
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModAdd" ng-click="Reset(formAdd,null)">
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" ng-click="Reset(form,null)">
 			<i class="fa fa-plus-circle"></i> Ajouter
 		</button>
 		<!-- Modal -->
-		<div class="modal fade" id="myModAdd" tabindex="-1" role="dialog" aria-labelledby="myModAddLabel" aria-hidden="true">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form name="formAdd" novalidate>
+					<form name="form" novalidate>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModAddLabel"> @{{ action }} [fres]</h4>
+						<h4 class="modal-title" id="myModalLabel"> @{{ action }} [fres]</h4>
 					</div>
 					<div class="modal-body">
 <!--  TODO
-						<div class="form-group input-group" ng-class="checkErr(formAdd.zname)">
+						<div class="form-group input-group" ng-class="checkErr(form.zname)">
 							<span class="input-group-addon"><i class="[ico]"></i></span>
-							<input class="form-control" type="text" placeholder="Pseudo" ng-model="toSend.name" name="zname" required="">
+							<input class="form-control" placeholder="Pseudo" ng-model="toSend.name" name="zname" 
+								type="text" required=""
+								data-toggle="tooltip" data-placement="right" title="Requis.">
 						</div>
-						<div class="form-group input-group" ng-class="checkErr(formAdd.zemail)">
+						<div class="form-group input-group" ng-class="checkErr(form.zemail)">
 							<span class="input-group-addon">@</span>
-							<input class="form-control" type="email" placeholder="Mail" ng-model="toSend.email" name="zemail" required="">
+							<input class="form-control" placeholder="Mail" ng-model="toSend.email" name="zemail" 
+								type="email" required=""
+								data-toggle="tooltip" data-placement="right" title="Requis. Email valide.">
 						</div>
-						<div class="form-group input-group" ng-class="checkErr(formAdd.pass)">
+						<div class="form-group input-group" ng-class="checkErr(form.zpassword)">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-							<input class="form-control" type="password" placeholder="Mot de passe" ng-model="toSend.password" name="pass" required="">
+							<input class="form-control" placeholder="Mot de passe" ng-model="toSend.password" name="zpassword" 
+								type="password" required=""
+								data-toggle="tooltip" data-placement="right" title="Requis.">
 						</div>
 -->
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<button type="button" class="btn btn-primary" ng-click="Send(formAdd)" ng-disabled="formAdd.$invalid">@{{ action }} </button>
+						<button type="button" class="btn btn-primary" ng-click="Send(form)" ng-disabled="form.$invalid">@{{ action }} </button>
 					</div>
 					</form>
 				</div>
@@ -94,3 +102,9 @@
 	<!-- /.row -->
 </div>
 
+<script>
+$('.modal-body').tooltip({
+	selector: "[data-toggle=tooltip]",
+	container: "body"
+})
+</script>

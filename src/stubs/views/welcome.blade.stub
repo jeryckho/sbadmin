@@ -347,10 +347,10 @@
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 	<!-- endbuild -->
 
-	<!-- build:jsp js/appli.js -->
-	<script src="js/script.js"></script>
-	<script src="js/dash.js"></script>
-	<script src="js/filters.js"></script>
+	<!-- build:js js/appli.js -->
+	<script src="js/Tpl/script.js"></script>
+	<script src="js/Tpl/dash.js"></script>
+	<script src="js/Tpl/filters.js"></script>
 	<!-- Don't touch above -->
 	<!-- endbuild -->
 

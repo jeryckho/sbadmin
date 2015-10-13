@@ -125,11 +125,12 @@ class PrepareSBCommand extends Command
     private function addPublic() {
         $liste = array(
             array( '/../stubs/public/dashboard.stub', './public/dashboard.html' ),
-            array( '/../stubs/public/js/dash.stub', './public/js/dash.js' ),
-            array( '/../stubs/public/js/script.stub', './public/js/script.js' ),
-            array( '/../stubs/public/js/filters.stub', './public/js/filters.js' )
+            array( '/../stubs/public/js/dash.stub', './public/js/Tpl/dash.js' ),
+            array( '/../stubs/public/js/script.stub', './public/js/Tpl/script.js' ),
+            array( '/../stubs/public/js/filters.stub', './public/js/Tpl/filters.js' )
         );
         $this->makeDirectory("./public/js/");
+        $this->makeDirectory("./public/js/Tpl/");
 
         $this->makeInstall( 'Public', $liste );
     }
@@ -137,9 +138,11 @@ class PrepareSBCommand extends Command
     private function addViews() {
         $liste = array(
             array( '/../stubs/views/welcome.blade.stub', './resources/views/welcome.blade.php' ),
-            array( '/../stubs/views/welcome.blade.stub', './resources/views/welcome.blade.tpl.php' ),
+            array( '/../stubs/views/welcome.blade.stub', './resources/views/Tpl/welcome.blade.php' ),
             array( '/../stubs/views/login.blade.stub', './resources/views/login.blade.php' ),
+            array( '/../stubs/views/login.blade.stub', './resources/views/Tpl/login.blade.php' ),
         );
+        $this->makeDirectory("./resources/views/Tpl/");
 
         $this->makeInstall( 'Views', $liste );
     }

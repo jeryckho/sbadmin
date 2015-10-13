@@ -2,12 +2,11 @@ var gulp = require('gulp'), fs = require('fs');
 $ = require('gulp-load-plugins')(); // Note the extra parens
 
 gulp.task('minify', ['clean'], function() {
-	return gulp.src('resources/views/welcome.blade.tpl.php')
+	return gulp.src('resources/views/Tpl/*.blade.php')
 		.pipe($.usemin({
 			assetsDir: 'public',
-			css: [$.minifyCss(), 'concat'],
-			js: [$.uglify(), 'concat'],
-			jsp: [$.uglify(), 'concat'],
+			css: [$.minifyCss, 'concat'],
+			js: [$.uglify, 'concat'],
 		}))
 		.pipe(gulp.dest('public'));
 });
@@ -19,14 +18,17 @@ gulp.task('fix-paths', ['minify'], function() {
 });
 
 gulp.task('fix-template', ['minify'], function() {
-	return gulp.src('public/welcome.blade.tpl.php')
+	return gulp.src('public/*.blade.php')
 		.pipe($.rimraf())
-		.pipe($.rename("welcome.blade.php"))
 		.pipe(gulp.dest('resources/views'));
 });
 
 gulp.task('add-headers', ['fix-template'], function() {
 	gulp.src('resources/views/welcome.blade.php')
+		.pipe($.header("{{-- This file is generated — do not edit by hand! --}}\n"))
+		.pipe(gulp.dest('resources/views'));
+
+	gulp.src('resources/views/login.blade.php')
 		.pipe($.header("{{-- This file is generated — do not edit by hand! --}}\n"))
 		.pipe(gulp.dest('resources/views'));
 
@@ -46,14 +48,13 @@ gulp.task('add-headers', ['fix-template'], function() {
 gulp.task('default', ['minify', 'fix-template', 'fix-paths', 'add-headers']);
 
 gulp.task('clean', function() {
-	var generated = ['public/js/site.js', 'public/js/appli.js', 'public/css/site.css', 'public/fonts/*', 'resources/views/welcome.blade.php'];
+	var generated = ['public/js/site.js', 'public/js/appli.js', 'public/css/site.css', 'public/fonts/*', 'resources/views/welcome.blade.php', 'resources/views/login.blade.php'];
 	return gulp.src(generated)
 		.pipe($.rimraf());
 });
 
 gulp.task('dev', ['clean'], function() {
-	gulp.src('resources/views/welcome.blade.tpl.php')
-		.pipe($.rename('welcome.blade.php'))
+	gulp.src('resources/views/Tpl/*.blade.php')
 		.pipe(gulp.dest('resources/views'));
 });
 

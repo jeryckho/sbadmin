@@ -119,13 +119,13 @@ class SimpleaddSBCommand extends Command
 
     private function modTemplate() {
         $liste = array(
-            './resources/views/welcome.blade.tpl.php' 
+            './resources/views/Tpl/welcome.blade.php' 
         );
 
         $this->info( 'Modifying Template!');
 
         $pre = "<!-- Don't touch above -->";
-        $pst = $this->replaceTpl( "\t" . '<script src="js/[res].js"></script>' );
+        $pst = $this->replaceTpl( "\t" . '<script src="js/Tpl/[res].js"></script>' );
 
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );
@@ -154,9 +154,10 @@ class SimpleaddSBCommand extends Command
 
     private function addPublic() {
         $liste = array(
-            array( '/../stubs/public/js/res.stub', $this->replaceTpl( './public/js/[res].js' ) )
+            array( '/../stubs/public/js/res.stub', $this->replaceTpl( './public/js/Tpl/[res].js' ) )
         );
         $this->makeDirectory( './public/js/' );
+        $this->makeDirectory( './public/js/Tpl/' );
 
         $this->makeInstall( 'Public', $liste );
     }
