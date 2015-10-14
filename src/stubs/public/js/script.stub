@@ -1,21 +1,18 @@
 angular.module('[sbn]', ['ngRoute', 'ngResource', 'filters', 'angular-loading-bar'])
 
-.controller('MainController', [ '$scope', '$route', '$routeParams', '$location', '$timeout' ,function ($scope, $route, $routeParams, $location, $timeout) {
-	$scope.$route = $route;
-	$scope.$location = $location;
-	$scope.$routeParams = $routeParams;
+.controller('MainController', [ '$route', '$location', '$timeout', function ( $route, $location, $timeout) {
+	var me = this;
+	me.$route = $route;
+	me.$location = $location;
 
-	$scope.callAtTimeout = function() {
+	me.callAtTimeout = function() {
 		window.location = '#/Dash';
 	}
 
-	$timeout( function(){ $scope.callAtTimeout(); }, 500);
+	$timeout( function(){ me.callAtTimeout(); }, 500);
 }])
 
-.controller('VoidController', [ '$scope', '$routeParams', function ($scope, $routeParams) {
-	$scope.name = 'EcoleController';
-	$scope.params = $routeParams;
-}])
+.controller('VoidController', function () {} )
 
 .config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
@@ -33,4 +30,76 @@ angular.module('[sbn]', ['ngRoute', 'ngResource', 'filters', 'angular-loading-ba
 
   // configure html5 to get links working on jsfiddle
 	//  $locationProvider.html5Mode(true);
+}])
+
+.factory('Svc', [ '$resource', function( $resource ){
+	var svc = {
+		// Don't touch above
+	};
+	svc.Reset = function ( he, form, Pos, init) {
+		he.action = '';
+		if (form) {
+			form.$setPristine();
+			form.$setUntouched();
+		}
+		if (Pos !== null) {
+			he.action = 'Modifier';
+			he.toSend = angular.copy( he.items[Pos] );
+		} else {
+			he.action = 'Ajouter';
+			he.toSend = init;
+		}
+
+	};
+	svc.checkErr = function( elem ) {
+		if (elem) {
+			if (elem.$touched && elem.$invalid) { return 'has-error'; }
+			if (elem.$touched && elem.$valid) { return 'has-success'; }
+		}
+		return '';
+	};
+	svc.Send = function( he, form ) {
+		if (he.action == 'Ajouter') {
+			if (form.$valid) {
+				svc[he.name].save( he.toSend, function(Res) {
+					if (Res.result != 'fail') {
+						he.items.push(Res);
+						$('#myModal').modal('hide');
+					} else {
+						angular.forEach(Res.errors, function(value,key) {
+							form['z'+key].$invalid = true;
+							form.$invalid = true;
+						});
+					}
+				});
+			}
+		} else {
+			if (form.$valid) {
+				var $lid = he.toSend.id;
+				svc[he.name].update( { Id : $lid }, he.toSend, function(Res) {
+					if (Res.result != 'fail') {
+						for (var i = 0, len = he.items.length; i < len; i++) {
+							if  (he.items[i].id === $lid) {
+								he.items[i] = Res;
+							}
+						}
+						$('#myModal').modal('hide');
+					} else {
+						angular.forEach(Res.errors, function(value,key) {
+							form['z'+key].$invalid = true;
+							form.$invalid = true;
+						});
+					}
+				});
+			}
+		}
+	};
+	svc.toDel = function ( he, Pos ) {
+		svc[he.name].delete ( { Id : he.items[Pos].id }, function (Res) {
+			if (Res.result == 'success') {
+				he.items.splice(Pos, 1);
+			}
+		});
+	};
+	return svc;
 }]);

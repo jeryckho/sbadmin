@@ -41,6 +41,7 @@ class SimpleaddSBCommand extends Command
 
             $this->modRoutes();
             $this->modTemplate();
+            $this->modPublic();
 
             $this->launchGulp(); 
         }
@@ -126,6 +127,25 @@ class SimpleaddSBCommand extends Command
 
         $pre = "<!-- Don't touch above -->";
         $pst = $this->replaceTpl( "\t" . '<script src="js/Tpl/[res].js"></script>' );
+
+        foreach ($liste as $elem) {
+            $crt = $this->fs->get( $elem );
+            if ( strpos( $crt, $pst ) === false ) {
+                $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );    
+            }
+            $this->fs->put( $elem, $crt );
+        }
+    }
+
+    private function modPublic() {
+        $liste = array(
+            './public/js/Tpl/script.js' 
+        );
+
+        $this->info( 'Modifying Public!');
+
+        $pre = "// Don't touch above";
+        $pst = $this->replaceTpl( "\t\t" . "'User' : " . '$resource' . "( 'user/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } )," );
 
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );

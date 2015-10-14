@@ -1,96 +1,33 @@
 angular.module('[sbn]')
 
-.factory('[Rsr]Svc', [ '$resource', function ($resource) {
-	return $resource( '[res]/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } );
+.controller( '[Rsr]Ctl', [ 'Svc', function( Svc) {
+	var me = this;
+	me.name = '[Rsr]';
+	me.items = Svc[me.name].query();
+	me.Reset = function( form, Pos ) { Svc.Reset( me, form, Pos, {  } ); } // TODO : name:'', email:'', password:''
+	me.checkErr = function( elem ) { return Svc.checkErr( elem ); }
+	me.Send = function( form ) { Svc.Send( me, form ); }
+	me.toDel = function ( Pos ) { Svc.toDel( me, Pos ); }
+	me.Reset();
 }])
 
-.controller('[Rsr]Ctl', [ '$scope', '$routeParams', '[Rsr]Svc', function ($scope, $routeParams, [Rsr]Svc) {
-	$scope.name = '[Rsr]Ctl';
-	$scope.params = $routeParams;
-	$scope.items = [Rsr]Svc.query();
-	$scope.Reset = function( form, Pos ) {
-		$scope.action = '';
-		if (form) {
-			form.$setPristine();
-			form.$setUntouched();
-		}
-		if (Pos !== null) {
-			$scope.action = 'Modifier';
-			$scope.toSend = angular.copy( $scope.items[Pos] );
-		} else {
-			$scope.action = 'Ajouter';
-			$scope.toSend = { }; // TODO : name:'', email:'', password:''
-		}
-	}
-	$scope.checkErr = function( elem ) {
-		if (elem) {
-			if (elem.$touched && elem.$invalid) { return 'has-error'; }
-			if (elem.$touched && elem.$valid) { return 'has-success'; }
-		}
-		return '';
-	}
-	$scope.Send = function( form ) {
-		if ($scope.action == 'Ajouter') {
-			if (form.$valid) {
-				[Rsr]Svc.save( $scope.toSend, function(Res) {
-					if (Res.result != 'fail') {
-						$scope.items.push(Res);
-						$('#myModal').modal('hide');
-						//$scope.$apply();
-					} else {
-						angular.forEach(Res.errors, function(value,key) {
-							form['z'+key].$invalid = true;
-							form.$invalid = true;
-						});
-					}
-				});
-			}
-		} else {
-			if (form.$valid) {
-				var $lid = $scope.toSend.id;
-				[Rsr]Svc.update( { Id : $lid }, $scope.toSend, function(Res) {
-					if (Res.result != 'fail') {
-						for (var i = 0, len = $scope.items.length; i < len; i++) {
-							if  ($scope.items[i].id === $lid) {
-								$scope.items[i] = Res;
-							}
-						}
-						$('#myModal').modal('hide');
-						//$scope.$apply();
-					} else {
-						angular.forEach(Res.errors, function(value,key) {
-							form['z'+key].$invalid = true;
-							form.$invalid = true;
-						});
-					}
-				});
-			}			
-		}
-	}
-	$scope.toDel = function ( Pos ) {
-		[Rsr]Svc.delete ( { Id : $scope.items[Pos].id }, function (Res) {
-			if (Res.result == 'success') {
-				$scope.items.splice(Pos, 1);
-			}
-		});
-	}
-	$scope.Reset();
-}])
-
-.controller('[Rsr]DtlCtl', [ '$scope', '$routeParams', '[Rsr]Svc', function ($scope, $routeParams, [Rsr]Svc) {
-	$scope.name = '[Rsr]DtlCtl';
-	$scope.params = $routeParams;
-	$scope.item = [Rsr]Svc.get( { Id : $scope.params.Id } );
+.controller('[Rsr]DtlCtl', [ '$routeParams', 'Svc', function( $routeParams, Svc) {
+	var me = this;
+	me.name = '[Rsr]';
+	me.params = $routeParams;
+	me.item = Svc[me.name].get( { Id : me.params.Id } );
 }])
 
 .config([ '$routeProvider', function ($routeProvider) {
 	$routeProvider
 	.when('/[Rsr]', {
 		templateUrl : '[res]/create',
-		controller : '[Rsr]Ctl'
+		controller : '[Rsr]Ctl',
+		controllerAs : 'Ctl'
 	})
 	.when('/[Rsr]/:Id', {
 		templateUrl : '[res]/0/edit',
-		controller : '[Rsr]DtlCtl'
+		controller : '[Rsr]DtlCtl',
+		controllerAs : 'Ctl'
 	});
 }]);

@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class [Rsr] extends VModel {
 	protected $table = '[ress]';
+
 	protected $guarded = [];
-    protected $dateFormat = 'U';
+	// protected $fillable = [];
+	protected $rules = [];
+
+	protected $hidden = [];
+	// protected $visible = [];
+
+	// protected $appends = [];
+	// protected $with = [];
+
 	public $timestamps = false;
+	protected $dateFormat = 'U';
 }

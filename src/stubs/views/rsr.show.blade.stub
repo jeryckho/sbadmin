@@ -13,35 +13,51 @@
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<div class="list-group">
+				<div class="list-group"ng-cloak>
 		<!--  TODO
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Pseudo
-						<span class="pull-right "><em>@{{ item.name }}</em>
+						<span class="pull-right "><em>@{{ Ctl.item.name }}</em>
 						</span>
 					</a>
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Mail
-						<span class="pull-right "><em>@{{ item.email }}</em>
+						<span class="pull-right "><em>@{{ Ctl.item.email }}</em>
 						</span>
 					</a>
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Création
-						<span class="pull-right "><em>@{{ item.created_at*1000 | date:'medium':'+0200' }}</em>
+						<span class="pull-right "><em>@{{ Ctl.item.created_at*1000 | date:'medium':'+0200' }}</em>
 						</span>
 					</a>
 					<a class="list-group-item" href="#">
 						<i class="fa fa-user fa-fw"></i> Modification
-						<span class="pull-right "><em>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</em>
+						<span class="pull-right "><em>@{{ Ctl.item.updated_at*1000 | date:'medium':'+0200' }}</em>
 						</span>
 					</a>
 		-->
 				</div>
 				<!-- /.list-group -->
-				<a class="btn btn-default btn-block" href="#/[Rsr]">Retour</a>
 			</div>
 			<!-- /.panel-body -->
 		</div>
+		<!--  TODO
+		<div class="panel panel-default"  ng-if="Ctl.item.users.length !== 0" ng-cloak>
+			<div class="panel-heading">
+				<i class="fa fa-user"></i> Utilisateurs
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					<a ng-repeat="user in Ctl.item.users" class="list-group-item" href="#/User/@{{ user.id }}">
+						<i class="fa fa-user fa-fw"></i> @{{ user.name }}
+						<span class="pull-right "><em>@{{ user.email }}</em>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		-->
+		<a class="btn btn-default btn-block" href="#/[Rsr]">Retour</a>
 	</div>
 </div>
 <!-- /.row -->
