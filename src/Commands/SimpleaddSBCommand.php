@@ -128,10 +128,16 @@ class SimpleaddSBCommand extends Command
         $pre = "<!-- Don't touch above -->";
         $pst = $this->replaceTpl( "\t" . '<script src="js/Tpl/[res].js"></script>' );
 
+        $pstB = "<!-- Don't touch below -->";
+        $preB = $this->replaceTpl( "\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t".'<a href="#/[Rsr]"><i class="[ico] fa-fw"></i> [fress]</a>'."\n\t\t\t\t\t\t</li>" );
+
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );
             if ( strpos( $crt, $pst ) === false ) {
                 $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );    
+            }
+            if ( strpos( $crt, $preB ) === false ) {
+                $crt = str_replace( $pstB, $preB . "\n" . $pstB, $crt );    
             }
             $this->fs->put( $elem, $crt );
         }
@@ -145,7 +151,7 @@ class SimpleaddSBCommand extends Command
         $this->info( 'Modifying Public!');
 
         $pre = "// Don't touch above";
-        $pst = $this->replaceTpl( "\t\t" . "'User' : " . '$resource' . "( 'user/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } )," );
+        $pst = $this->replaceTpl( "\t\t" . "'[Rsr]' : " . '$resource' . "( '[res]/:Id', { Id : '@Id' }, { 'update' : { method : 'PUT' } } )," );
 
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );

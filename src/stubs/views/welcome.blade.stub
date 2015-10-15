@@ -310,9 +310,7 @@
 						<li>
 							<a href="#/Ecole/A"><i class="fa fa-th-list fa-fw"></i> Compétences</a>
 						</li>
-						<li>
-							<a href="#/User"><i class="fa fa-user fa-fw"></i> Utilisateurs</a>
-						</li>
+<!-- Don't touch below -->
 					</ul>
 				</div>
 				<!-- /.sidebar-collapse -->
