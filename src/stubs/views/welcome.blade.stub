@@ -287,28 +287,14 @@
 							<a href="#/Dash"><i class="fa fa-dashboard fa-fw"></i> Tableau de bord</a>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-thumb-tack fa-fw"></i> Evaluation<span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-thumb-tack fa-fw"></i> Test<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="#/Ecole/A/ch/1">Ajouter</a>
+									<a href="#">Ajouter</a>
 								</li>
-								<li>
-									<a href="#/Ecole/A">Sorties</a>
-								</li>
+
 							</ul>
 							<!-- /.nav-second-level -->
-						</li>
-						<li>
-							<a href="#/Classe"><i class="fa fa-university fa-fw"></i> Classes</a>
-						</li>
-						<li>
-							<a href="#/Ecole/A"><i class="fa fa-graduation-cap fa-fw"></i> Elèves</a>
-						</li>
-						<li>
-							<a href="#/Ecole/A/ch/3"><i class="fa fa-table fa-fw"></i> Trimestres</a>
-						</li>
-						<li>
-							<a href="#/Ecole/A"><i class="fa fa-th-list fa-fw"></i> Compétences</a>
 						</li>
 <!-- Don't touch below -->
 					</ul>

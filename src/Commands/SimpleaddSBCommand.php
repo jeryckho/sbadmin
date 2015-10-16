@@ -37,6 +37,7 @@ class SimpleaddSBCommand extends Command
             $this->addController();
             $this->addPublic();
             $this->addModel();
+            $this->upgradeModel();
             $this->addViews();
 
             $this->modRoutes();
@@ -99,6 +100,51 @@ class SimpleaddSBCommand extends Command
         $this->sbn = $this->option('sbname');
     }
 
+    private function upgradeModel() {
+        $liste = array(
+            $this->replaceTpl( './app/[Rsr].php' )
+        );
+
+        $this->info( 'Upgrading Model!');
+
+        foreach ($liste as $elem) {
+            $crt = $this->fs->get( $elem );
+
+            $org = 'extends Model';
+            $dst = 'extends VModel';
+            if ( strpos( $crt, $org ) !== false ) {
+                $crt = str_replace( $org, $dst, $crt );
+            }
+
+            $anchor = 'protected $table';
+            if ( strpos( $crt, $anchor ) !== false ) {
+                $org = 'public $timestamps';
+                if ( strpos( $crt, $org ) === false ) {
+                    $crt = str_replace( $anchor, $org . " = true;\n\t" .  $anchor, $crt );
+                }
+
+                $orgk = 'protected $hidden';
+                $orgv = 'protected $visible';
+                if ( ( strpos( $crt, $orgk ) === false ) && ( strpos( $crt, $orgv ) === false ) ) {
+                    $crt = str_replace( $anchor, $orgk . " = [];\n\t// " . $orgv . " = [];\n\t" . $anchor, $crt );
+                }
+
+                $orgk = 'protected $guarded';
+                $orgv = 'protected $fillable';
+                if ( ( strpos( $crt, $orgk ) === false ) && ( strpos( $crt, $orgv ) === false ) ) {
+                    $crt = str_replace( $anchor, $orgk . " = [];\n\t// " . $orgv . " = [];\n\t" . $anchor, $crt );
+                }
+            }
+
+            $org = 'public $timestamps';
+            if ( strpos( $crt, $org ) !== false ) {
+                $crt = str_replace( $org, 'protected $dateFormat = '. "'U';\n\t" .  $org, $crt );
+            }
+
+            $this->fs->put( $elem, $crt );
+        }
+    }
+
     private function modRoutes() {
         $liste = array(
             './app/Http/routes.php' 
@@ -112,7 +158,7 @@ class SimpleaddSBCommand extends Command
         foreach ($liste as $elem) {
             $crt = $this->fs->get( $elem );
             if ( strpos( $crt, $pst ) === false ) {
-                $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );    
+                $crt = str_replace( $pre, $pre . "\n" . $pst, $crt );
             }
             $this->fs->put( $elem, $crt );
         }
@@ -200,9 +246,9 @@ class SimpleaddSBCommand extends Command
 
     private function launchGulp() {
         if ($this->launch) {
-            exec('gulp');
+            exec('gulp dev');
         } else {
-             $this->comment( "Launch 'gulp' to finalize action" );
+             $this->comment( "Launch 'gulp dev' to finalize action" );
         }
     }
 

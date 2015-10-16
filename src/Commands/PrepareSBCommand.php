@@ -174,9 +174,9 @@ class PrepareSBCommand extends Command
         if ($this->launch) {
             exec('npm install gulp');
             exec('npm install');
-            exec('gulp');
+            exec('gulp dev');
         } else {
-             $this->comment( "Launch 'npm install' and 'gulp' to finalize preparation" );
+             $this->comment( "Launch 'npm install' and 'gulp dev' to finalize preparation" );
         }
     }
 
