@@ -94,8 +94,8 @@ class SimpleaddSBCommand extends Command
         $this->res = $this->option('resource') ? $this->option('resource') : mb_strtolower( $this->Rsr );
         $this->ress = $this->option('resources') ? $this->option('resources') : str_plural( $this->res );
         $this->table = $this->option('table') ? $this->option('table') : $this->ress;
-        $this->fres = $this->option('localized') ? $this->option('localized') : $this->Rsr;
-        $this->fress = $this->option('localizeds') ? $this->option('localizeds') : str_plural( $this->fres );
+        $this->fres = $this->option('localized') ? mb_convert_encoding( $this->option('localized'), "utf-8", "windows-1252") : $this->Rsr;
+        $this->fress = $this->option('localizeds') ? mb_convert_encoding( $this->option('localizeds'), "utf-8", "windows-1252") : str_plural( $this->fres );
         $this->ico = $this->option('icon');
         $this->sbn = $this->option('sbname');
     }
