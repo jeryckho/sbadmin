@@ -137,7 +137,7 @@ class SimpleaddSBCommand extends Command
             }
 
             $org = 'public $timestamps';
-            if ( strpos( $crt, $org ) !== false ) {
+            if ( ( strpos( $crt, $org ) !== false ) && ( strpos( $crt, '$dateFormat' ) === false ) ) {
                 $crt = str_replace( $org, 'protected $dateFormat = '. "'U';\n\t" .  $org, $crt );
             }
 
