@@ -36,15 +36,23 @@ angular.module('[sbn]', ['ngRoute', 'ngResource', 'filters', 'angular-loading-ba
 	var svc = {
 		// Don't touch above
 	};
-	svc.Reset = function ( he, form, Pos, init) {
+	svc.findID = function( list, id ) {
+		for ( var i=0; i<list.length; i++ ) {
+			if ( list[i].id == id ) {
+				return i;
+			}
+		}
+		return false;
+	};
+	svc.Reset = function ( he, form, idx, init) {
 		he.action = '';
 		if (form) {
 			form.$setPristine();
 			form.$setUntouched();
 		}
-		if (Pos !== null) {
+		if ( ( idx !== null ) && ( svc.findID( he.items, idx ) !== false ) ) {
 			he.action = 'Modifier';
-			he.toSend = angular.copy( he.items[Pos] );
+			he.toSend = angular.copy( he.items[ svc.findID( he.items, idx ) ] );
 		} else {
 			he.action = 'Ajouter';
 			he.toSend = init;
@@ -94,10 +102,10 @@ angular.module('[sbn]', ['ngRoute', 'ngResource', 'filters', 'angular-loading-ba
 			}
 		}
 	};
-	svc.toDel = function ( he, Pos ) {
-		svc[he.name].delete ( { Id : he.items[Pos].id }, function (Res) {
-			if (Res.result == 'success') {
-				he.items.splice(Pos, 1);
+	svc.toDel = function ( he, idx ) {
+		svc[he.name].delete ( { Id : idx }, function (Res) {
+			if ( ( Res.result == 'success' ) && ( svc.findID( he.items, idx ) !== false ) ) {
+				he.items.splice( svc.findID( he.items, idx ) , 1);
 			}
 		});
 	};

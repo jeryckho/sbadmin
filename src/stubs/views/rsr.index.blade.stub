@@ -36,8 +36,8 @@
 								<td>@{{ item.updated_at*1000 | date:'medium':'+0200' }}</td>
 -->
 								<td><a href="#/[Rsr]/@{{ item.id }}"><span class="fa fa-eye text-success"></span></a>
-								 / <a href="#" data-toggle="modal" data-target="#myModal" ng-click="Ctl.Reset(form,$index)"><span class="glyphicon text-info glyphicon-wrench"></span></a>
-								 / <a href="#" ng-click="Ctl.toDel($index)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
+								 / <a href="#" data-toggle="modal" data-target="#myModal" ng-click="Ctl.Reset(form,item.id)"><span class="glyphicon text-info glyphicon-wrench"></span></a>
+								 / <a href="#" ng-click="Ctl.toDel(item.id)"><span class="glyphicon text-danger glyphicon-remove"></span></a></td>
 							</tr>
 						</tbody>
 					</table>

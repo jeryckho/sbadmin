@@ -4,10 +4,10 @@ angular.module('[sbn]')
 	var me = this;
 	me.name = '[Rsr]';
 	me.items = Svc[me.name].query();
-	me.Reset = function( form, Pos ) { Svc.Reset( me, form, Pos, {  } ); } // TODO : name:'', email:'', password:''
+	me.Reset = function( form, idx ) { Svc.Reset( me, form, idx, {  } ); } // TODO : name:'', email:'', password:''
 	me.checkErr = function( elem ) { return Svc.checkErr( elem ); }
 	me.Send = function( form ) { Svc.Send( me, form ); }
-	me.toDel = function ( Pos ) { Svc.toDel( me, Pos ); }
+	me.toDel = function ( idx ) { Svc.toDel( me, idx ); }
 	me.Reset();
 }])
 
