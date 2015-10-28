@@ -1,0 +1,17 @@
+<?php namespace App\Http\Controllers;
+
+use Redirect;
+
+class UtilController extends Controller {
+
+	public function showWelcome() {
+		return view('welcome');
+	}
+
+	public function catchAll() {
+		return Redirect::to('/');
+	}
+
+}
+
+?>

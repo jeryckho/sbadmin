@@ -112,6 +112,7 @@ class PrepareSBCommand extends Command
     private function addLogic() {
         $liste = array(
             array( '/../stubs/Controllers/Auth/AuthController.stub', './app/Http/Controllers/Auth/AuthController.php' ),
+            array( '/../stubs/Controllers/UtilController.stub', './app/Http/Controllers/UtilController.php' ),
             array( '/../stubs/Middleware/Authenticate.stub', './app/Http/Middleware/Authenticate.php' ),
             array( '/../stubs/Middleware/VerifyCsrfToken.stub', './app/Http/Middleware/VerifyCsrfToken.php' ),
             array( '/../stubs/routes.stub', './app/Http/routes.php' ),

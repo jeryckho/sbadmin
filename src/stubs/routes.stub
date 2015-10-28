@@ -11,17 +11,12 @@
 |
 */
 
-Route::resource('log', 'Auth\AuthController',
-                ['only' => ['index', 'show', 'store', 'destroy']]);
+Route::resource('log', 'Auth\AuthController', ['only' => ['index', 'show', 'store', 'destroy']]);
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function ()    {
-		return view('welcome');
-    });
+	Route::get('/', 'UtilController@showWelcome');
 /* Don't touch above */
 
 });
 
-Route::any( '{catchall}', function ( $page ) {
-	return Redirect::to('/');
-} )->where('catchall', '(.*)');
+Route::any( '{catchall}', 'UtilController@catchAll' )->where('catchall', '(.*)');
